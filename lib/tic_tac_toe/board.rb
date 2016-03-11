@@ -21,7 +21,39 @@ module TicTacToe
       false
     end
 
+    def draw?
+      ! grid.flatten.map { |cell| cell.value }.any_empty?
+    end
+
+    def winner?
+      winning_positions.each do |winning_position|
+        next if winning_position_values(winning_position).all_empty?
+        return true if winning_position_values(winning_position).all_same?
+      end
+
+      false
+    end
+
     private
+
+    def winning_position_values(winning_position)
+      winning_position.map { |cell| cell.value }
+    end
+
+    # There are 8 possible winning positions:
+    # 3 rows, 3 columns & 2 diagonals
+    def winning_positions
+      grid +           # rows
+      grid.transpose + # columns
+      diagonals        # two diagonals
+    end
+
+    def diagonals
+      [
+        [get_cell(0, 0), get_cell(1, 1), get_cell(2, 2)],
+        [get_cell(0, 2), get_cell(1, 1), get_cell(2, 0)],
+      ]
+    end
 
     def default_grid
       Array.new(3) { Array.new(3) { Cell.new } }

@@ -47,6 +47,9 @@ module TicTacToe
     end
 
     describe '#game_over' do
+      let(:x_cell) { Cell.new("X") }
+      let(:o_cell) { Cell.new("O") }
+      let(:empty)  { Cell.new }
       let(:board) { Board.new }
 
       it 'returns :winner when winner? is true' do
@@ -66,6 +69,67 @@ module TicTacToe
         board.stub(:winner?) { false }
         board.stub(:draw?) { false }
 
+        expect(board.game_over).to be_falsey
+      end
+
+      context 'when the values in a row are all the same' do
+        it 'returns :winner' do
+          grid = [
+            [x_cell, x_cell, x_cell],
+            [o_cell, o_cell, x_cell],
+            [o_cell, x_cell, empty],
+          ]
+
+          board = Board.new(grid: grid)
+          expect(board.game_over).to eq(:winner)
+        end
+      end
+
+      context 'when the values in a column are all the same' do
+        it 'returns :winner' do
+          grid = [
+            [x_cell, x_cell, empty],
+            [o_cell, x_cell, o_cell],
+            [o_cell, x_cell, empty],
+          ]
+
+          board = Board.new(grid: grid)
+          expect(board.game_over).to eq(:winner)
+        end
+      end
+
+      context 'when the values in a diagonal are all the same' do
+        it 'returns :winner' do
+          grid = [
+            [x_cell, x_cell, empty],
+            [o_cell, x_cell, o_cell],
+            [o_cell, empty, x_cell],
+          ]
+
+          board = Board.new(grid: grid)
+          expect(board.game_over).to eq(:winner)
+        end
+      end
+
+      it 'returns :draw when all spaces on the board are taken' do
+        grid = [
+          [o_cell, x_cell, o_cell],
+          [x_cell, x_cell, o_cell],
+          [o_cell, o_cell, x_cell],
+        ]
+
+        board = Board.new(grid: grid)
+        expect(board.game_over).to eq(:draw)
+      end
+
+      it 'returns false when there is no winner or draw' do
+        grid = [
+          [o_cell, empty, o_cell],
+          [x_cell, empty, o_cell],
+          [o_cell, empty, x_cell],
+        ]
+
+        board = Board.new(grid: grid)
         expect(board.game_over).to be_falsey
       end
     end
