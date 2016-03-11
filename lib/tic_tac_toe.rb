@@ -4,4 +4,5 @@ module TicTacToe
   # Your code goes here...
 end
 
-require_relative "./tic_tac_toe/cell.rb"
+require_relative "./tic_tac_toe/cell"
+require_relative "./tic_tac_toe/player"
