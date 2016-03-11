@@ -27,5 +27,23 @@ module TicTacToe
         expect(board.grid).to eq('blah')
       end
     end
+
+    describe '#get_cell' do
+      it 'returns the cell value based on (x, y) coordinates' do
+        grid = [["", "" , ""],["", "" , "O"],["", "" , ""]]
+        board = Board.new(grid: grid)
+
+        expect( board.get_cell(2,1) ).to eq("O")
+      end
+    end
+
+    describe '#set_cell' do
+      it 'sets the cell value based on (x, y) coordinates' do
+        board = Board.new
+        board.set_cell(1, 1, "X")
+
+        expect(board.get_cell(1, 1).value).to eql("X")
+      end
+    end
   end
 end
