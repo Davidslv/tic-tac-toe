@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "tic_tac_toe"
+
+puts "What's the name of the 1st player?"
+player1 = TicTacToe::Player.new(name: gets.chomp, color: 'X')
+puts "What's the name of the 2nd player?"
+player2 = TicTacToe::Player.new(name: gets.chomp, color: 'O')
+
+stop = false
+
+until stop do
+  TicTacToe::Game.new([player1, player2]).play
+  puts 'Would you like to play? (y/n)'
+  stop = true if gets.chomp == 'n'
+end
