@@ -54,7 +54,7 @@ module TicTacToe
         game.stub(:current_player) { david }
         game.board.stub(:game_over) { :winner }
 
-        expect(game.game_over_message).to eq "David won!"
+        expect(game.game_over_message).to eq "\n\nDavid won!\n\n"
       end
 
       it 'returns "The game ended in a tie!" when the board has a draw' do
@@ -62,7 +62,7 @@ module TicTacToe
         game.stub(:current_player) { david }
         game.board.stub(:game_over) { :draw }
 
-        expect(game.game_over_message).to eq "The game ended in a tie!"
+        expect(game.game_over_message).to eq "\n\nThe game ended in a tie!\n\n"
       end
     end
   end
